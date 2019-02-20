@@ -3,7 +3,6 @@ package com.abrahambueno.javaorders.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "order")
@@ -13,28 +12,28 @@ public class Order {
     private Long ordNum;
 
     private double ordAmount;
-
     private double advanceAmount;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "custCode", nullable = false)
     @JsonIgnore
-    private Customer customer;
+    private Customer custCode;
 
-
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "order")
-    @JoinColumn(name = "custCode")
+    @ManyToOne
+    @JoinColumn(name = "agentCode")
     @JsonIgnore
-    private Set<Order> orders;
+    private Agent agentCode;
 
     private String ordDescription;
 
-    public Order(Long ordNum, double ordAmount, double advanceAmount, String ordDescription) {
-        this.ordNum = ordNum;
+    public Order() {
+    }
+
+    public Order(double ordAmount, double advanceAmount, Customer custCode, Agent agentCode, String ordDescription) {
         this.ordAmount = ordAmount;
         this.advanceAmount = advanceAmount;
-
+        this.custCode = custCode;
+        this.agentCode = agentCode;
         this.ordDescription = ordDescription;
     }
 
@@ -62,7 +61,21 @@ public class Order {
         this.advanceAmount = advanceAmount;
     }
 
+    public Customer getCustCode() {
+        return custCode;
+    }
 
+    public void setCustCode(Customer custCode) {
+        this.custCode = custCode;
+    }
+
+    public Agent getAgentCode() {
+        return agentCode;
+    }
+
+    public void setAgentCode(Agent agentCode) {
+        this.agentCode = agentCode;
+    }
 
     public String getOrdDescription() {
         return ordDescription;
