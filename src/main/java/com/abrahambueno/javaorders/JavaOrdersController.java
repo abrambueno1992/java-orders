@@ -1,5 +1,6 @@
 package com.abrahambueno.javaorders;
 
+import com.abrahambueno.javaorders.models.Agent;
 import com.abrahambueno.javaorders.models.Customer;
 import com.abrahambueno.javaorders.models.Order;
 import com.abrahambueno.javaorders.repository.AgentRepository;
@@ -24,8 +25,14 @@ public class JavaOrdersController {
     @Autowired
     OrderRepository orderrepos;
 
-//    @GetMapping("/customers")
-//    @PostMapping("/customers")
+    @GetMapping("/customers")
+    public List<Customer> getAllCustomers() {
+        return customerrepos.findAll();
+    }
+    @PostMapping("/customers")
+    public Customer createCustomer(@RequestBody Customer customer) throws URISyntaxException {
+        return customerrepos.save(customer);
+    }
 
     @GetMapping("/customer/order")
     public List<Object[]> getCustomerWithOrders() {
@@ -77,7 +84,10 @@ public class JavaOrdersController {
         }
     }
 
-//    @PostMapping("/agents")
+    @PostMapping("/agents")
+    public Agent addAgent(@RequestBody Agent agent) {
+        return agentrepos.save(agent);
+    } 
 
     @GetMapping("/agents/orders")
     public List<Object[]> getAgentOrders() {
