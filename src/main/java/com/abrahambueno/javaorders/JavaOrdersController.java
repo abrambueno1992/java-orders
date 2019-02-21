@@ -28,28 +28,54 @@ public class JavaOrdersController {
 
     @GetMapping("/customer/order")
     public List<Object[]> getCustomerWithOrders() {
-        return customerrepos.findAllOrders();
+        var foundCustList = customerrepos.findAllOrders();
+        if (foundCustList != null) {
+            return foundCustList;
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/customer/name/{custname}")
     public List<Order> getCustomerOrders(@PathVariable String custname) {
-        return customerrepos.findByCustName(custname);
+        var foundCustList = customerrepos.findByCustName(custname);
+        if (foundCustList != null) {
+            return foundCustList;
+        } else {
+            return null;
+        }
     }
 
 
     @GetMapping("/customer/order/{custcode}")
     public List<Order> getOrdersByCustcode(@PathVariable Long custcode) throws URISyntaxException {
-        return customerrepos.findOrdersByCustCode(custcode);
+        var foundOrders = customerrepos.findOrdersByCustCode(custcode);
+        if (foundOrders != null) {
+            return foundOrders;
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/agents")
     public List<Object[]> getAgentCustomers() {
-        return agentrepos.getAgentsAndCustomers();
+        var agentsCustomers = agentrepos.getAgentsAndCustomers();
+        if (agentsCustomers != null) {
+            return agentsCustomers;
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/agents/orders")
     public List<Object[]> getAgentOrders() {
-        return agentrepos.getAgentsAndOrders();
+        var agentOrders = agentrepos.getAgentsAndOrders();
+        if (agentOrders != null) {
+            return agentOrders;
+        } else {
+            return null;
+        }
+
     }
 
     @GetMapping("/customer/{custcode}")
