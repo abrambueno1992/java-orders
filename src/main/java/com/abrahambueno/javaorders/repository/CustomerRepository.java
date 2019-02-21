@@ -17,9 +17,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
         List<Object[]> findAllOrders();
 
     // something is wrong
-    @Query(value = "select o.ordnum, c.custname from orders o, customers c where c.custcode = :custcode", nativeQuery = true)
+    @Query(value = "select o.ordnum, c.custname from orders o, customers c where c.custcode = o.custnum, c.custcode = :custcode", nativeQuery = true)
     List<Order> findOrdersByCustCode(@Param("custcode") Long custcode);
 
-    Customer findByCustCode(long custcode);
+
+//    Customer findByCustCode(long custcode);
 //    public Customer findByCustName(String name);
 }
