@@ -45,14 +45,6 @@ public class JavaOrdersController {
         }
     }
 
-    @GetMapping("/customer/custcode/{custcode}")
-    public Customer deleteCustomer(@PathVariable Long custcode) {
-        customerrepos.deleteById(custcode);
-        orderrepos.deleteAllByCustCode(custcode);
-        return customerrepos.findByCustCode(custcode);
-
-    }
-
     @GetMapping("/customer/name/{custname}")
     public List<Order> getCustomerOrders(@PathVariable String custname) {
         var foundCustList = customerrepos.findByCustName(custname);
@@ -74,7 +66,17 @@ public class JavaOrdersController {
         }
     }
 
-
+    @DeleteMapping("/customers/custcode/{custcode}")
+    public Customer deleteCustomer(@PathVariable Long custcode) throws URISyntaxException  {
+        var deleteCust = customerrepos.findById(custcode);
+        if (deleteCust.isPresent()) {
+            customerrepos.deleteById(custcode);
+            orderrepos.deleteAllByCustCode(custcode);
+            return deleteCust.get();
+        } else {
+            return null;
+        }
+    }
     @GetMapping("/agents")
     public List<Object[]> getAgentCustomers() {
         var agentsCustomers = agentrepos.getAgentsAndCustomers();
@@ -117,9 +119,34 @@ public class JavaOrdersController {
 
     }
 
-//    @GetMapping("/orders")
-//    @PostMapping("/orders")
-//    @GetMapping("/orders/ordnum/{ordnum}")
-//    @PutMapping("/orders/ordnum/{ordnum}")
-//    @DeleteMapping("/customers/custcode/{custcode}")
+    @GetMapping("/orders")
+    public List<Order> getAllOrders() {
+        return orderrepos.findAll();
+    }
+    @PostMapping("/orders")
+    public Order createOrder(@RequestBody Order order) {
+        return orderrepos.save(order);
+    }
+    @GetMapping("/orders/ordnum/{ordnum}")
+    public Order getOrderByOrdnum(@PathVariable Long ordnum) {
+        var orderReturned = orderrepos.findById(ordnum);
+        if (orderReturned.isPresent()) {
+            return orderReturned.get();
+        } else {
+            return null;
+        }
+    }
+
+    @PutMapping("/orders/ordnum/{ordnum}")
+    public Order updateOrder(@RequestBody Order neworder, @PathVariable Long ordnum) throws URISyntaxException {
+        Optional<Order> updateOrder = orderrepos.findById(ordnum);
+        if (updateOrder.isPresent()) {
+            neworder.setOrdNum(ordnum);
+            orderrepos.save(neworder);
+            return neworder;
+        } else {
+            return null;
+        }
+    }
+
 }
