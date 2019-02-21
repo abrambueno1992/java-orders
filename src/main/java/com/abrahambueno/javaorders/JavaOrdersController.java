@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class JavaOrdersController {
 
 
     @GetMapping("/customer/order/{custcode}")
-    public List<Order> getOrdersByCustcode(@PathVariable long custcode) {
+    public List<Order> getOrdersByCustcode(@PathVariable Long custcode) throws URISyntaxException {
         return customerrepos.findOrdersByCustCode(custcode);
     }
 
