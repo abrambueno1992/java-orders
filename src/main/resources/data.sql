@@ -1,4 +1,4 @@
-INSERT INTO agents (agentcode, agentname, workingarea, commission, phone, country)
+INSERT INTO agent (agentcode, agentname, workingarea, commission, phone, country)
             VALUES (7, 'Ramasundar', 'Bangalore', 0.15, '077-25814763', ''),
                    (3, 'Alex ', 'London', 0.13, '075-12458969', ''),
                    (8, 'Alford', 'New York', 0.12, '044-25874365', ''),
@@ -14,7 +14,7 @@ INSERT INTO agents (agentcode, agentname, workingarea, commission, phone, countr
 
 
 
-INSERT INTO customers (custcode,custname, custcity, workingarea, custcountry, grade, openingamt, receiveamt, paymentamt, outstandingamt, phone, agentcode)
+INSERT INTO customer (custcode,custname, custcity, workingarea, custcountry, grade, openingamt, receiveamt, paymentamt, outstandingamt, phone, agentcode)
               VALUES (13, 'Holmes', 'London', 'London', 'UK', '2', 6000.00, 5000.00, 7000.00, 4000.00, 'BBBBBBB', 3),
                      (1, 'Micheal', 'New York', 'New York', 'USA', '2', 3000.00, 5000.00, 2000.00, 6000.00, 'CCCCCCC', 8),
                      (20, 'Albert', 'New York', 'New York', 'USA', '3', 5000.00, 7000.00, 6000.00, 6000.00, 'BBBBSBB', 8),
@@ -42,7 +42,7 @@ INSERT INTO customers (custcode,custname, custcity, workingarea, custcountry, gr
                      (11, 'Sundariya', 'Chennai', 'Chennai', 'India', '3', 7000.00, 11000.00, 7000.00, 11000.00, 'PPHGRTS', 10);
 
 
-INSERT INTO orders (ordnum, ordamount, advanceamount, custcode, agentcode, orddescription)
+INSERT INTO order (ordnum, ordamount, advanceamount, custcode, agentcode, orddescription)
             VALUES (200100, 1000.00, 600.00, 13, 3, 'SOD'),
                    (200110, 3000.00, 500.00, 19, 10, 'SOD'),
                    (200107, 4500.00, 900.00, 7, 10, 'SOD'),
