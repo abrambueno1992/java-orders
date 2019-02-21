@@ -20,5 +20,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select o.ordnum, c.custname from orders o, customers c where c.custcode = :custcode", nativeQuery = true)
     List<Order> findOrdersByCustCode(@Param("custcode") Long custcode);
 
+    Customer findByCustCode(long custcode);
 //    public Customer findByCustName(String name);
 }

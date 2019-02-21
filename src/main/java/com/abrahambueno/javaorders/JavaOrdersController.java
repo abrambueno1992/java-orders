@@ -1,15 +1,13 @@
 package com.abrahambueno.javaorders;
 
+import com.abrahambueno.javaorders.models.Customer;
 import com.abrahambueno.javaorders.models.Order;
 import com.abrahambueno.javaorders.repository.AgentRepository;
 import com.abrahambueno.javaorders.repository.CustomerRepository;
 import com.abrahambueno.javaorders.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -26,6 +24,9 @@ public class JavaOrdersController {
     @Autowired
     OrderRepository orderrepos;
 
+//    @GetMapping("/customers")
+//    @PostMapping("/customers")
+
     @GetMapping("/customer/order")
     public List<Object[]> getCustomerWithOrders() {
         var foundCustList = customerrepos.findAllOrders();
@@ -34,6 +35,14 @@ public class JavaOrdersController {
         } else {
             return null;
         }
+    }
+
+    @GetMapping("/customer/custcode/{custcode}")
+    public Customer deleteCustomer(@PathVariable Long custcode) {
+        customerrepos.deleteById(custcode);
+        orderrepos.deleteAllByCustCode(custcode);
+        return customerrepos.findByCustCode(custcode);
+
     }
 
     @GetMapping("/customer/name/{custname}")
@@ -57,6 +66,7 @@ public class JavaOrdersController {
         }
     }
 
+
     @GetMapping("/agents")
     public List<Object[]> getAgentCustomers() {
         var agentsCustomers = agentrepos.getAgentsAndCustomers();
@@ -66,6 +76,8 @@ public class JavaOrdersController {
             return null;
         }
     }
+
+//    @PostMapping("/agents")
 
     @GetMapping("/agents/orders")
     public List<Object[]> getAgentOrders() {
@@ -78,16 +90,16 @@ public class JavaOrdersController {
 
     }
 
-    @GetMapping("/customer/{custcode}")
-    public void deleteCustomer(@PathVariable Long custcode) {
-        customerrepos.deleteById(custcode);
-        orderrepos.deleteAllByCustCode(custcode);
+//    @PutMapping("/agents/agentcode/{agentcode}")
 
-    }
-
-
-    @GetMapping("/agents/{agentcode}")
+    @GetMapping("/agents/agentcode/{agentcode}")
     public void deleteAgentNotAssigned(@PathVariable Long agentcode) {
 
     }
+
+//    @GetMapping("/orders")
+//    @PostMapping("/orders")
+//    @GetMapping("/orders/ordnum/{ordnum}")
+//    @PutMapping("/orders/ordnum/{ordnum}")
+//    @DeleteMapping("/customers/custcode/{custcode}")
 }
