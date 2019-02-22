@@ -6,6 +6,7 @@ import com.abrahambueno.javaorders.models.Order;
 import com.abrahambueno.javaorders.repository.AgentRepository;
 import com.abrahambueno.javaorders.repository.CustomerRepository;
 import com.abrahambueno.javaorders.repository.OrderRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
+@Api(value = "Java Orders Application", description = "An Application that implements orders with CRUD functionality")
 @RequestMapping(path = {}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class JavaOrdersController {
     @Autowired
@@ -27,7 +30,7 @@ public class JavaOrdersController {
     OrderRepository orderrepos;
 
     @GetMapping("/customers")
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers() throws URISyntaxException {
         return customerrepos.findAll();
     }
     @PostMapping("/customers")
@@ -35,6 +38,7 @@ public class JavaOrdersController {
         return customerrepos.save(customer);
     }
 
+    // not working
     @GetMapping("/customer/order")
     public List<Object[]> getCustomerWithOrders() {
         var foundCustList = customerrepos.findAllOrders();
@@ -45,6 +49,7 @@ public class JavaOrdersController {
         }
     }
 
+    //not sure if it works
     @GetMapping("/customer/name/{custname}")
     public List<Order> getCustomerOrders(@PathVariable String custname) {
         var foundCustList = customerrepos.findByCustName(custname);
@@ -66,6 +71,7 @@ public class JavaOrdersController {
         }
     }
 
+    // not sure if it works
     @DeleteMapping("/customers/custcode/{custcode}")
     public Customer deleteCustomer(@PathVariable Long custcode) throws URISyntaxException  {
         var deleteCust = customerrepos.findById(custcode);
@@ -78,7 +84,7 @@ public class JavaOrdersController {
         }
     }
     @GetMapping("/agents")
-    public List<Object[]> getAgentCustomers() {
+    public List<Object[]> getAgentCustomers() throws URISyntaxException {
         var agentsCustomers = agentrepos.getAgentsAndCustomers();
         if (agentsCustomers != null) {
             return agentsCustomers;
@@ -103,6 +109,7 @@ public class JavaOrdersController {
 
     }
 
+
     @PutMapping("/agents/agentcode/{agentcode}")
     public Agent updateAgent(@RequestBody Agent newagent, @PathVariable Long agentcode) throws URISyntaxException {
         Optional<Agent> updateAgent = agentrepos.findById(agentcode);
@@ -114,13 +121,15 @@ public class JavaOrdersController {
             return null;
         }
     }
+
+    // not sure if works
     @GetMapping("/agents/agentcode/{agentcode}")
     public void deleteAgentNotAssigned(@PathVariable Long agentcode) {
 
     }
 
     @GetMapping("/orders")
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders() throws URISyntaxException {
         return orderrepos.findAll();
     }
     @PostMapping("/orders")
